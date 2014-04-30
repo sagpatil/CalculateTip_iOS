@@ -77,7 +77,7 @@
                         <segment title="20%"/>
                     </segments>
                     <connections>
-                        <action selector="ontap:" destination="-1" eventType="valueChanged" id="hsP-iA-btD"/>
+                        <action selector="onSegmentControlValueChange:" destination="-1" eventType="valueChanged" id="J7V-iF-Hrd"/>
                     </connections>
                 </segmentedControl>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WoY-cm-Xkh">
