@@ -34,7 +34,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSTimer *timer1=[NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(changeBackgroundColor) userInfo:nil repeats:YES];
+    NSTimer *timer1=[NSTimer timerWithTimeInterval:10.1 target:self selector:@selector(changeBackgroundColor) userInfo:nil repeats:YES];
     
     NSRunLoop *mainLoop = [NSRunLoop mainRunLoop];
     [mainLoop addTimer:timer1 forMode:NSDefaultRunLoopMode];
@@ -100,6 +100,11 @@ CGFloat blueValue;
     
     self.tipLabel.text = [NSString stringWithFormat:@"$%.2f", tipAmount];
     self.amountLabel.text = [NSString stringWithFormat:@"$%.2f", totalAmount];
+    
+    // Test retrieve saved values
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    float tip1 =[defaults floatForKey:@"tip1"];
+    NSLog(@" tip %f",tip1);
 }
 
 - (void)onSettingsButton{
