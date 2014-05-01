@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tipControl;
 - (IBAction)onSegmentControlValueChange:(id)sender;
+- (IBAction)onBillTextFieldEditChange:(id)sender;
 - (void) updateValues;
 -(void)onSettingsButton;
 
@@ -36,49 +37,30 @@
 {
     [super viewDidAppear:animated];
     
-    NSTimer *timer1=[NSTimer timerWithTimeInterval:10.1 target:self selector:@selector(changeBackgroundColor) userInfo:nil repeats:YES];
+    NSTimer *timer1=[NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(changeBackgroundColor) userInfo:nil repeats:YES];
     
     NSRunLoop *mainLoop = [NSRunLoop mainRunLoop];
     [mainLoop addTimer:timer1 forMode:NSDefaultRunLoopMode];
     
-    
-    
-    
-
-    
-
 }
+
 CGFloat redValue;
-CGFloat greenValue=255;
+CGFloat greenValue;
 CGFloat blueValue;
 
 -(void)changeBackgroundColor
 {
+
     
-//        int p=10;
-//        CGFloat redValue = p<50 ? 255 : (256 - (p-50)*5.12);
-//        CGFloat greenValue = p>50 ? 255 :((p)*5.12);
-//        //CGFloat blueValue = 0;
-//    redValue = 255;
-//    greenValue=255;
-//    
-//   // CGFloat redValue = (arc4random() %255)/255.0f;
-//     greenValue = (arc4random() %25)/25.0f;
-    blueValue = (arc4random() %255)/255.0f;
+    redValue   = ((arc4random() %255)/255.0f);
+    greenValue = ((arc4random() %25)/25.0f);
+    blueValue  = ((arc4random() %255)/255.0f);
     
     
-    redValue = redValue + 5;
-    greenValue = greenValue - redValue;
-    if (redValue > 255) {
-        redValue = 0;
-        greenValue = 255;
-        blueValue = 255;
-    }
-    
-    //NSLog(@"Red : %.f  Green: %f  Blue:  %f",redValue,greenValue,blueValue);
+   // NSLog(@"Red : %f  Green: %f  Blue:  %f",redValue*100,greenValue*100,blueValue*100);
     
     
-    //self.view.backgroundColor = [UIColor colorWithRed:redValue green:greenValue blue:blueValue alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:redValue green:greenValue blue:blueValue alpha:0.3];
 }
 
 - (void)viewDidLoad
@@ -96,6 +78,7 @@ CGFloat blueValue;
     float tip1 =[defaults floatForKey:@"tip1"];
     float tip2 =[defaults floatForKey:@"tip2"];
     float tip3 =[defaults floatForKey:@"tip3"];
+    int thisSwitchOn=[defaults integerForKey:@"switch"];
     if (tip1 == 0.0 && tip2 ==0.0 && tip3 ==0.0) {
         tip1 =5.0;tip2=10.0;tip3=20.0;
     }
@@ -109,6 +92,9 @@ CGFloat blueValue;
     [self.tipControl setTitle:strTip1 forSegmentAtIndex:0];
     [self.tipControl setTitle:strTip2 forSegmentAtIndex:1];
     [self.tipControl setTitle:strTip3 forSegmentAtIndex:2];
+    self.tipControl.selectedSegmentIndex=thisSwitchOn;
+    
+    [self updateValues];
 
 }
 
@@ -127,25 +113,19 @@ CGFloat blueValue;
 }
 
 - (IBAction)ontap:(id)sender {
-       NSLog(@"HEre");
     [self.view endEditing:YES];
-    [self updateValues];
 }
 
 - (void)updateValues
 {   float billAmount = [self.billTextField.text floatValue];
-    
-  
 
     NSString *strTip1 =  [self.tipControl titleForSegmentAtIndex:0];
-      NSString *strTip2 =  [self.tipControl titleForSegmentAtIndex:1];
-      NSString *strTip3 =  [self.tipControl titleForSegmentAtIndex:2];
-//    NSLog(@"Segtitle :%@",str);
+    NSString *strTip2 =  [self.tipControl titleForSegmentAtIndex:1];
+    NSString *strTip3 =  [self.tipControl titleForSegmentAtIndex:2];
     float tip1, tip2, tip3;
     tip1 = [strTip1 floatValue];
     tip2 = [strTip2 floatValue];
     tip3 = [strTip3 floatValue];
-    
     
     NSArray *tipValues = @[@(tip1),@(tip2),@(tip3)];
     
@@ -155,9 +135,6 @@ CGFloat blueValue;
     
     self.tipLabel.text = [NSString stringWithFormat:@"$%.2f", tipAmount];
     self.amountLabel.text = [NSString stringWithFormat:@"$%.2f", totalAmount];
-    
-    
-    
     
 }
 
@@ -171,5 +148,9 @@ CGFloat blueValue;
     NSLog(@"Current Tip value %@ ",val);
     [self updateValues];
 
+}
+
+- (IBAction)onBillTextFieldEditChange:(id)sender {
+    [self updateValues];
 }
 @end
