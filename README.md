@@ -3,4 +3,11 @@ CalculateTip_iOS
 
 Tip Calculator App for iOS
 
-![image](http://content.screencast.com/users/sagpatil/folders/Jing/media/ff4e7a3a-30c1-401c-b133-4bc3cf3dea80/00000001.png)
+Check the screenshots folder for screenshots of the app
+
+Features :
+1. Auto Calculate as the amount is entered
+2. Ability to change the Tip Values
+3. Set defaults
+4. Persist data including changed tip values and default settings
+5. Auto background color change
